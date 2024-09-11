@@ -5,7 +5,7 @@ import time
 from ultralytics import YOLO
 
 # YOLO v8 모델 로드
-model = YOLO('/Users/doungukkim/Desktop/workspace/object-detection-alarm/trained-models/4-1/best.pt')  # 학습된 모델 경로로 변경하세요
+model = YOLO('/Users/doungukkim/Desktop/workspace/object-detecting-v2/trained-models/4-1/best.pt')  # 학습된 모델 경로로 변경하세요
 
 # 객체 추적을 위한 딕셔너리
 tracked_objects = {}
