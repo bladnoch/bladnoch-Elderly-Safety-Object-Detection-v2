@@ -105,8 +105,8 @@ def process_frame(frame, frame_count):
 
 
 # 입력 및 출력 비디오 파일 경로
-input_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/original/tennis.mp4'
-output_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/output/tennis_output.mp4'
+input_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/original/test-video.mp4'
+output_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/output/teat-video.mp4'
 
 cap = cv2.VideoCapture(input_video_path)
 fps = int(cap.get(cv2.CAP_PROP_FPS))
