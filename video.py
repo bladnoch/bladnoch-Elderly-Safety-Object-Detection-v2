@@ -8,7 +8,7 @@ from ultralytics import YOLO
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 print(f"Using device: {device}")
 
-# YOLO v8 모델 로드
+# YOLO 학습 모델 로드
 model = YOLO('/Users/doungukkim/Desktop/workspace/object-detecting-v2/trained-models/4-1/best.pt')
 
 # 객체 추적을 위한 딕셔너리
@@ -27,7 +27,7 @@ def calculate_distance(box1, box2):
     center1 = ((box1[0] + box1[2]) / 2, (box1[1] + box1[3]) / 2)
     center2 = ((box2[0] + box2[2]) / 2, (box2[1] + box2[3]) / 2)
 
-    # 유클리드 거리 계산
+    # 두 점 사이 거리 계산
     return np.sqrt((center1[0] - center2[0]) ** 2 + (center1[1] - center2[1]) ** 2)
 
 
