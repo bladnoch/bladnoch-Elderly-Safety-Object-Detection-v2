@@ -115,7 +115,7 @@ height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 out = cv2.VideoWriter(output_video_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (width, height))
 
 frame_count = 0
-skip_frames = 4  # 프레임 건너뛰기 설정
+skip_frames = 1  # 프레임 건너뛰기 설정
 
 while cap.isOpened():
     ret, frame = cap.read()

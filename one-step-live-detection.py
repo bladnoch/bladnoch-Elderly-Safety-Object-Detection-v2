@@ -3,12 +3,16 @@ import torch
 import numpy as np
 import time
 from ultralytics import YOLO
+from collections import deque
 
 # YOLO v8 모델 로드
-model = YOLO('/Users/doungukkim/Desktop/workspace/object-detecting-v2/trained-models/4-1/best.pt')  # 학습된 모델 경로로 변경하세요
+model = YOLO('/Users/doungukkim/Desktop/workspace/object-detecting-v2/trained-models/4-1/best.pt')
 
 # 객체 추적을 위한 딕셔너리
 tracked_objects = {}
+
+# 프레임 버퍼 (최근 5개의 처리된 프레임을 저장)
+frame_buffer = deque(maxlen=5)
 
 
 def process_frame(frame, frame_count):
@@ -24,7 +28,7 @@ def process_frame(frame, frame_count):
             conf = float(box.conf)
             cls = int(box.cls)
 
-            if cls == 0:  # 'person' 클래스 (또는 노인을 나타내는 클래스 번호로 변경)
+            if cls == 0:  # 'person' 클래스
                 center = ((x1 + x2) // 2, (y1 + y2) // 2)
                 obj_id = f"person_{frame_count}_{center}"
 
@@ -64,10 +68,15 @@ def log_alert(obj_id, duration):
     print(f"경고: 객체 ID {obj_id}가 {duration:.2f}초 동안 움직이지 않았습니다.")
 
 
-# 비디오 캡처 객체 생성 (0은 기본 카메라, 파일 경로를 지정하여 비디오 파일 사용 가능)
+# 비디오 캡처 객체 생성
 cap = cv2.VideoCapture(0)
+cap.set(cv2.CAP_PROP_FPS, 30)  # 카메라 FPS 설정 (지원되는 경우)
 
 frame_count = 0
+display_fps = 30  # 화면 출력 FPS
+frame_time = 1 / display_fps
+
+last_display_time = time.time()
 
 while cap.isOpened():
     ret, frame = cap.read()
@@ -75,9 +84,18 @@ while cap.isOpened():
         break
 
     frame_count += 1
-    processed_frame = process_frame(frame, frame_count)
 
-    cv2.imshow('Elderly Monitoring', processed_frame)
+    # 모든 프레임에 대해 처리 수행
+    processed_frame = process_frame(frame, frame_count)
+    frame_buffer.append(processed_frame)
+
+    current_time = time.time()
+    if current_time - last_display_time >= frame_time:
+        # 화면 출력
+        if frame_buffer:
+            display_frame = frame_buffer[-1]  # 가장 최근에 처리된 프레임 사용
+            cv2.imshow('Elderly Monitoring', display_frame)
+        last_display_time = current_time
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
