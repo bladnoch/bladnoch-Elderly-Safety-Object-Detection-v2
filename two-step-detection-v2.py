@@ -8,8 +8,9 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 print(f"Using device: {device}")
 
 # 두 개의 YOLO 모델 로드
-furniture_model = YOLO('/trained-models/original/yolov8m.pt')
-person_wheelchair_model = YOLO('/trained-models/4-1/best.pt')
+furniture_model = YOLO('/Users/doungukkim/Desktop/workspace/object-detecting-v2/trained-models/original/yolov8m.pt')
+# person_wheelchair_model = YOLO('/Users/doungukkim/Desktop/workspace/object-detecting-v2/trained-models/4-1/best.pt')
+person_wheelchair_model=YOLO('/Users/doungukkim/Desktop/workspace/object-detecting-v2/trained-models/original/yolov8m.pt')
 
 # 안전한 가구 클래스 ID (COCO 데이터셋 기준)
 safe_furniture_classes = [56, 57, 59]  # 56: chair, 57: couch, 59: bed
@@ -31,7 +32,7 @@ previous_positions = {}
 MOVEMENT_THRESHOLD = 20
 
 # 움직임이 없는 상태로 간주할 시간 (프레임 수)
-STATIONARY_THRESHOLD = 30 * 3  # 5초 (30fps 기준)
+STATIONARY_THRESHOLD = 30 * 3
 
 
 def calculate_iou(box1, box2):
@@ -157,8 +158,8 @@ def process_frame(frame, frame_count):
 
 
 # 입력 및 출력 비디오 파일 경로
-input_video_path = '/tennis/original/test-video.mp4'
-output_video_path = '/tennis/output/v2-output.mp4'
+input_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/original/men-standing.mp4'
+output_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/output/1112.mp4'
 
 cap = cv2.VideoCapture(input_video_path)
 fps = int(cap.get(cv2.CAP_PROP_FPS))

@@ -189,8 +189,8 @@ def process_frame(frame, frame_count):
 
 # 메인 실행 부분
 def main():
-    input_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/original/test-video.mp4'
-    output_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/output/v4-output.mp4'
+    input_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/original/men-standing.mp4'
+    output_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/output/1112v4.mp4'
 
     cap = cv2.VideoCapture(input_video_path)
     fps = int(cap.get(cv2.CAP_PROP_FPS))

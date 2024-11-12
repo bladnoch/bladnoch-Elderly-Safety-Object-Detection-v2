@@ -1,3 +1,5 @@
+# 모델 2개 사용
+# 한개는 시작할때만 켜지고 가구 기록 후 종료, 두번쨰 모델은 사람 추적, safe, move, not safe 비교
 import cv2
 import torch
 import numpy as np
@@ -105,8 +107,8 @@ def process_frame(frame, frame_count):
 
 
 # 입력 및 출력 비디오 파일 경로
-input_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/original/test-video.mp4'
-output_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/output/teat-video.mp4'
+input_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/original/personNWheelchair.mp4'
+output_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/output/personNWheelchair.mp4'
 
 cap = cv2.VideoCapture(input_video_path)
 fps = int(cap.get(cv2.CAP_PROP_FPS))

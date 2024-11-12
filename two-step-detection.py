@@ -12,7 +12,7 @@ print(f"Using device: {device}")
 
 # 두 개의 YOLO 모델 로드
 furniture_model = YOLO('/Users/doungukkim/Desktop/workspace/object-detecting-v2/trained-models/original/yolov8m.pt')  # 기본 pre-trained 모델
-person_wheelchair_model = YOLO('/Users/doungukkim/Desktop/workspace/object-detecting-v2/trained-models/4-1/best.pt')
+person_wheelchair_model = YOLO('/Users/doungukkim/Desktop/workspace/object-detecting-v2/trained-models/original/yolov8m.pt')  # 기본 pre-trained 모델
 
 # 안전한 가구 클래스 ID (COCO 데이터셋 기준)
 safe_furniture_classes = [56, 57, 59]  # 56: chair, 57: couch, 59: bed
@@ -111,8 +111,8 @@ def process_frame(frame, frame_count):
 
 
 # 입력 및 출력 비디오 파일 경로
-input_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/original/test-video.mp4'
-output_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/output/v1-output.mp4'
+input_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/original/one-not-moving.mp4'
+output_video_path = '/tennis/output/etc/one-not-moving.mp4'
 
 cap = cv2.VideoCapture(input_video_path)
 fps = int(cap.get(cv2.CAP_PROP_FPS))
