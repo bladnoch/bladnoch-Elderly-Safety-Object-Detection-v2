@@ -1,5 +1,6 @@
-# 실제 메일 전송 기능
-# segmentation
+# sms 메일 전송 기능 추가
+# 안전가구 인직 segmentation 모델로 변경
+# 위험 탐지시 위험 알림은 한번만 가도록 변경
 
 
 import cv2
@@ -39,8 +40,8 @@ client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 # 모델 로드
 # 안전 가구 탐지를 위한 세그멘테이션 모델
 model_segmentation = YOLO('/Users/doungukkim/Desktop/workspace/object-detecting-v2/trained-models/segment/yolo11x-seg.pt')  # segmentation 모델 경로
-model_detection = YOLO('/Users/doungukkim/Desktop/workspace/object-detecting-v2/trained-models/original/yolov8m.pt') # 중간 모델
-# model_detection = YOLO('/Users/doungukkim/Desktop/workspace/object-detecting-v2/trained-models/original/yolov8n.pt') # 작은 모델
+# model_detection = YOLO('/Users/doungukkim/Desktop/workspace/object-detecting-v2/trained-models/original/yolov8m.pt') # 중간 모델
+model_detection = YOLO('/Users/doungukkim/Desktop/workspace/object-detecting-v2/trained-models/original/yolov8n.pt') # 작은 모델
 # model_detection= YOLO('/Users/doungukkim/Desktop/workspace/object-detecting-v2/trained-models/4-1/best.pt') # trained model
 
 # 안전한 가구 클래스 ID (COCO 데이터셋 기준)
@@ -257,8 +258,8 @@ def main():
     global STATIONARY_THRESHOLD
 
     # 입력 및 출력 비디오 경로를 실제 파일 위치로 수정하세요
-    input_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/original/cafe.mp4'
-    output_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/output/cafe-output-v7.mp4'
+    input_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/original/my-video2.mp4'
+    output_video_path = '/Users/doungukkim/Desktop/workspace/object-detecting-v2/tennis/output/my-video2-output-v7-n.mp4'
 
     cap = cv2.VideoCapture(input_video_path)
     fps = int(cap.get(cv2.CAP_PROP_FPS))
