@@ -1,43 +1,43 @@
-# 실제 메일 전송 기능
-# segmentation
-
 from twilio.rest import Client
 
-def send_sms(to_number, body):
-    # Twilio 계정 정보
-    account_sid = get_credential_from('/Users/doungukkim/Desktop/workspace/object-detecting-v2/credentials/account_sid.txt')
-    auth_token=get_credential_from('/Users/doungukkim/Desktop/workspace/object-detecting-v2/credentials/auth_token.txt')
+class Alert:
+    def __init__(self, account_sid_path, auth_token_path):
+        self.account_sid = self.get_credential_from(account_sid_path)
+        self.auth_token = self.get_credential_from(auth_token_path)
+        self.from_number = "+17753699968"  # Twilio에서 제공한 인증된 발신 번호
 
-    if auth_token and account_sid:
-        print("credential 값을 읽어왔습니다.")
-    else:
-        print("credential 값을 읽어오지 못했습니다.")
+        if self.account_sid and self.auth_token:
+            print("Credential 값을 읽어왔습니다.")
+        else:
+            print("Credential 값을 읽어오지 못했습니다.")
 
-    client = Client(account_sid, auth_token)
+        self.client = Client(self.account_sid, self.auth_token)
 
-    try:
-        # 메시지 보내기
-        message = client.messages.create(
-            body=body,
-            from_="given_phone_number",  # Twilio에서 제공한 전화번호
-            to=to_number
-        )
-        print(f"메시지 전송 완료: SID {message.sid}")
-    except Exception as e:
-        print(f"메시지 전송 실패: {e}")
+    def send_sms(self, to_number, body):
+        if not self.account_sid or not self.auth_token:
+            print("Twilio credentials가 없습니다. 메시지를 보낼 수 없습니다.")
+            return
 
+        try:
+            # 메시지 보내기
+            message = self.client.messages.create(
+                body=f"[고령자 위험 감지 시스템] {body}",  # 시스템 이름을 본문에 포함
+                from_=self.from_number,  # Twilio 인증 발신 번호
+                to=to_number
+            )
+            print(f"메시지 전송 완료: SID {message.sid}")
+        except Exception as e:
+            print(f"메시지 전송 실패: {e}")
 
-def get_credential_from(file_path):
-    try:
-        with open(file_path, 'r') as file:
-            token = file.readline().strip()
-            return token
-    except FileNotFoundError:
-        print(f"파일을 찾을 수 없습니다: {file_path}")
-        return None
-    except Exception as e:
-        print(f"오류가 발생했습니다: {e}")
-        return None
-
-# 예시 호출
-send_sms("+01046054434", "위험 상황이 감지되었습니다. 즉시 확인하세요.")
+    @staticmethod
+    def get_credential_from(file_path):
+        try:
+            with open(file_path, 'r') as file:
+                token = file.readline().strip()
+                return token
+        except FileNotFoundError:
+            print(f"파일을 찾을 수 없습니다: {file_path}")
+            return None
+        except Exception as e:
+            print(f"오류가 발생했습니다: {e}")
+            return None
